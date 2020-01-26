@@ -1,0 +1,22 @@
+.uploadimage-container {
+  width: 80vh;
+  height: 80vh;
+  border: 1px solid;
+  border-color: inherit;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.uploadimage-info {
+  text-align: center;
+}
+
+label {
+  width: 40vh;
+}
+
+.choose-file-button {
+  text-align: center;
+  padding: 10px;
+}

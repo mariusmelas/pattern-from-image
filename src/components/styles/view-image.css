@@ -1,0 +1,15 @@
+.canvas-container {
+  justify-self: center;
+  align-self: center;
+  border-color: inherit;
+}
+.view-pattern-container {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+.pattern-close-button {
+  width: 2vw;
+  height: 2vw;
+  font-size: 2em;
+  border: none;
+}
