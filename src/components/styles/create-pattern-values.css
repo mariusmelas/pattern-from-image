@@ -5,8 +5,6 @@
   grid-gap: 10px;
 }
 .create-pattern {
-  width: 10vw;
-  height: 10vw;
   display: grid;
   grid-gap: 2px;
   grid-template-columns: repeat(6, 1fr);

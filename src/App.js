@@ -3,13 +3,15 @@ import CreatePattern from './components/CreatePattern.js'
 import ViewCanvas from './components/ViewImage.js'
 import ColorPicker from './components/color-picker/ColorPicker.js'
 import './App.css'
+import usePercentOfMinSize from './CustomHooks.js'
 
 function App() {
   const [pattern, setPattern] = useState(undefined)
   const [primaryColor, setPrimaryColor] = useState(undefined)
   const [secondaryColor, setSecondaryColor] = useState(undefined)
-
   const numberOfValues = 6
+
+  const window10percent = usePercentOfMinSize(20)
 
   return (
     <div
@@ -25,13 +27,13 @@ function App() {
           <div>
             <div
               style={{
-                margin: '5%',
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 justifyItems: 'center',
               }}
             >
               <ColorPicker
+                window10percent={window10percent}
                 selectedColor={primaryColor}
                 setSelectedColor={setPrimaryColor}
                 colorID={0}
@@ -48,6 +50,7 @@ function App() {
                 ]}
               />
               <ColorPicker
+                window10percent={window10percent}
                 selectedColor={secondaryColor}
                 setSelectedColor={setSecondaryColor}
                 colorID={1}
@@ -70,10 +73,18 @@ function App() {
                 setPattern={setPattern}
                 primaryColor={primaryColor}
                 secondaryColor={secondaryColor}
+                window10percent={window10percent}
               />
             </div>
           </div>
-          <div style={{ margin: '5%' }}>
+          <div
+            style={{
+              height: '90vh',
+              display: 'grid',
+              justifyItems: 'center',
+              alignItems: 'center',
+            }}
+          >
             <ViewCanvas
               pattern={pattern}
               numberOfValues={numberOfValues}

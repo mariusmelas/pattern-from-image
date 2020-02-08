@@ -25,3 +25,10 @@
   justify-items: center;
   border-color: inherit;
 }
+
+@media (max-width: 1000px) {
+  .pattern-container {
+    grid-template-rows: unset;
+    grid-template-rows: 1fr 1fr;
+  }
+}

@@ -10,30 +10,39 @@ function AlternativeColor(props) {
     // calculate the radius of currentColor and alternative colors in pixels
     // Sizes is 20% and 10% of container
 
-    const containerWidth = props.forwardRef.current.offsetWidth
-    const containerHeight = props.forwardRef.current.offsetHeight
-    const currentColorRadius = ((containerWidth / 100) * 30) / 2
-    const alternativeColorRadius = ((containerWidth / 100) * 20) / 2
+    function handleResize() {
+      const containerWidth = props.forwardRef.current.offsetWidth
+      const containerHeight = props.forwardRef.current.offsetHeight
+      const currentColorRadius = ((containerWidth / 100) * 30) / 2
+      const alternativeColorRadius = ((containerWidth / 100) * 20) / 2
 
-    // center of the container.
-    const centerX = containerWidth / 2
-    const centerY = containerHeight / 2
+      // center of the container.
+      const centerX = containerWidth / 2
+      const centerY = containerHeight / 2
 
-    // Start position for the alternative colors
-    setStartX(centerX - alternativeColorRadius)
-    setStartY(centerY - alternativeColorRadius)
-    // Find position of alternative color.
-    // Get point at d degrees around the current color
-    const r = currentColorRadius * 2.5
-    const deg = props.deg * (Math.PI / 180)
-    let x = r * Math.cos(deg)
-    let y = r * Math.sin(deg)
+      // Start position for the alternative colors
+      setStartX(centerX - alternativeColorRadius)
+      setStartY(centerY - alternativeColorRadius)
+      // Find position of alternative color.
+      // Get point at d degrees around the current color
+      const r = currentColorRadius * 2.5
+      const deg = props.deg * (Math.PI / 180)
+      let x = r * Math.cos(deg)
+      let y = r * Math.sin(deg)
 
-    // x += centerX - currentColorRadius + alternativeColorRadius
-    // y += centerY - currentColorRadius + alternativeColorRadius
+      // x += centerX - currentColorRadius + alternativeColorRadius
+      // y += centerY - currentColorRadius + alternativeColorRadius
 
-    setPosition([x, y])
-  }, [props.containerSize])
+      setPosition([x, y])
+    }
+    handleResize()
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize')
+    }
+  }, [])
 
   const alternativeColorStyle = {
     position: 'absolute',

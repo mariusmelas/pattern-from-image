@@ -4,6 +4,8 @@ import './styles/create-pattern-values.css'
 function CreatePatternElement(props) {
   // Grid too draw one element of the pattern
 
+  useEffect(() => {}, [props.window10percent])
+
   const updatePattern = (valueGrid, pixel) => {
     let newValuePatterns = [...props.pattern]
     newValuePatterns[valueGrid][pixel] = !newValuePatterns[valueGrid][
@@ -13,7 +15,13 @@ function CreatePatternElement(props) {
   }
 
   return (
-    <div className="create-pattern">
+    <div
+      style={{
+        width: props.window10percent || '10vw',
+        height: props.window10percent || '10vw',
+      }}
+      className="create-pattern"
+    >
       {props.patternElement.map((pixel, pixelIndex) => (
         <div
           key={(pixel, pixelIndex)}
@@ -64,6 +72,7 @@ function CreatePattern(props) {
             setPattern={props.setPattern}
             primaryColor={props.primaryColor}
             secondaryColor={props.secondaryColor}
+            window10percent={props.window10percent}
           />
         ))}
     </div>
