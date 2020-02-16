@@ -1,6 +1,6 @@
 {
   "name": "pixel-pattern-image",
-  "homepage": "https://mariusmelas.github.io/pattern-from-image",
+  "homepage": "http://mariusmelas.github.io/pattern-from-image",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
