@@ -1,34 +1,35 @@
 .background {
   display: grid;
   justify-items: center;
+  align-items: center;
   width: 100vw;
-  height: 100vh;
+  height: 80vh;
   margin: 0;
 }
 
 .app-container {
-  width: 90vw;
-  height: 90vh;
-  margin-top: 5vh;
-  display: grid;
-  grid-template-rows: 20px auto;
+  width: 100vw;
+  height: 80vh;
 
-  border: 1px solid;
+  display: grid;
+  grid-template-rows: 1fr 0.6fr;
+  grid-gap: 5%;
   border-color: inherit;
   justify-items: center;
+  align-items: center;
+}
+
+@media screen and (min-width: 760px) and (orientation: landscape) {
+  .app-container {
+    grid-template-rows: unset;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .pattern-container {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
   justify-items: center;
+  align-items: center;
   border-color: inherit;
-}
-
-@media (max-width: 1000px) {
-  .pattern-container {
-    grid-template-rows: unset;
-    grid-template-rows: 1fr 1fr;
-  }
 }

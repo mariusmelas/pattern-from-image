@@ -37,10 +37,10 @@ function AlternativeColor(props) {
     }
     handleResize()
 
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('resize', handleResize, false)
 
     return () => {
-      window.removeEventListener('resize')
+      window.removeEventListener('resize', handleResize, false)
     }
   }, [])
 

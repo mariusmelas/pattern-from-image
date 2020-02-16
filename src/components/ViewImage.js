@@ -3,16 +3,41 @@ import UploadImage from './UploadImage.js'
 import './styles/view-image.css'
 
 function ViewPattern(props) {
-  const windowWidth = window.innerWidth * 0.8
-  const windowHeight = window.innerHeight * 0.8
+  const [WIDTH, setWIDTH] = useState(undefined)
+  const [HEIGHT, setHEIGHT] = useState(undefined)
+  const [isBigSize, setIsBigSize] = useState(false)
 
-  const WIDTH =
-    windowHeight < windowWidth ? windowHeight : windowWidth
-  const HEIGHT = WIDTH
+  useEffect(() => {
+    // Set the size for the canvas based on viewport width
+
+    const orientation =
+      window.visualViewport.width > window.visualViewport.height
+        ? 'landscape'
+        : 'portrait'
+    if (!isBigSize) {
+      let size = window.visualViewport.width
+      size =
+        size > 760 && orientation === 'landscape' ? size * 0.4 : size
+      setWIDTH(size)
+      setHEIGHT(size)
+    }
+  }, [isBigSize])
+
   const elements = 40
   const patternElementWidth = WIDTH / elements
 
   const patternCanvasRef = useRef(0)
+
+  function handleCanvasClick() {
+    if (!isBigSize) {
+      let size = window.visualViewport.height
+      setWIDTH(size)
+      setHEIGHT(size)
+      setIsBigSize(true)
+    } else {
+      setIsBigSize(false)
+    }
+  }
 
   useEffect(() => {
     const canvas = patternCanvasRef.current
@@ -49,9 +74,15 @@ function ViewPattern(props) {
         }
       }
     }
-  }, [props.pattern, props.primaryColor, props.secondaryColor])
+  }, [
+    props.pattern,
+    props.primaryColor,
+    props.secondaryColor,
+    WIDTH,
+    HEIGHT,
+  ])
 
-  return <canvas ref={patternCanvasRef} />
+  return <canvas onClick={handleCanvasClick} ref={patternCanvasRef} />
 }
 
 function ViewImage(props) {
@@ -159,7 +190,12 @@ function ViewImage(props) {
 
   return (
     <div>
-      {!props.pixelated && <canvas ref={canvasRef}></canvas>}
+      {!props.pixelated && (
+        <canvas
+          style={{ visibility: 'hidden' }}
+          ref={canvasRef}
+        ></canvas>
+      )}
 
       <div
         className="pixelated"
@@ -235,12 +271,6 @@ function ViewCanvas(props) {
             handlePixelated={handlePixelated}
             pixelated={pixelated}
           />
-          <button
-            className="pattern-close-button"
-            onClick={handleCloseButton}
-          >
-            X
-          </button>
         </div>
       ) : (
         !pixelated && (

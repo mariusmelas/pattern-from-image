@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 function usePercentOfMinSize(percent) {
-  const [orientation, setOrientation] = useState(undefined)
   const [size, setSize] = useState(undefined)
 
   useEffect(() => {
@@ -14,10 +13,10 @@ function usePercentOfMinSize(percent) {
       setSize(newSize)
     }
 
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('resize', handleResize, false)
 
     return () => {
-      window.removeEventListener('resize')
+      window.removeEventListener('resize', false)
     }
   }, [])
 

@@ -1,6 +1,6 @@
 .uploadimage-container {
-  width: 80vh;
-  height: 80vh;
+  width: 40vw;
+  height: 40vw;
   border: 1px solid;
   border-color: inherit;
   display: grid;
@@ -10,13 +10,29 @@
 
 .uploadimage-info {
   text-align: center;
+  width: 40vw;
+  display: grid;
+  justify-items: center;
 }
 
 label {
-  width: 40vh;
+  width: 30vw;
 }
 
 .choose-file-button {
+  width: 30vw;
+
   text-align: center;
   padding: 10px;
+}
+
+@media screen and (max-height: 40vw) {
+  .uploadimage-container {
+    width: 80vh;
+    height: 80vh;
+  }
+
+  .uploadimage-info {
+    width: 80vh;
+  }
 }

@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import CreatePattern from './components/CreatePattern.js'
 import ViewCanvas from './components/ViewImage.js'
-import ColorPicker from './components/color-picker/ColorPicker.js'
+import ChangeColor from './components/ChangeColor.js'
 import './App.css'
 import usePercentOfMinSize from './CustomHooks.js'
 
 function App() {
   const [pattern, setPattern] = useState(undefined)
-  const [primaryColor, setPrimaryColor] = useState(undefined)
-  const [secondaryColor, setSecondaryColor] = useState(undefined)
+  const [primaryColor, setPrimaryColor] = useState('#E64D36')
+  const [secondaryColor, setSecondaryColor] = useState('#D9CDE6')
   const numberOfValues = 6
 
-  const window10percent = usePercentOfMinSize(20)
+  const percentOfMinSize = usePercentOfMinSize(40)
+
+  useEffect(() => {
+    document.body.style = `background: ${primaryColor};`
+  }, [primaryColor])
 
   return (
     <div
@@ -22,76 +26,35 @@ function App() {
         color: secondaryColor,
       }}
     >
+      <ChangeColor
+        primaryColor={primaryColor}
+        setPrimaryColor={setPrimaryColor}
+        secondaryColor={secondaryColor}
+        setSecondaryColor={setSecondaryColor}
+      />
       <div className="app-container">
+        <div
+          style={{
+            display: 'grid',
+            justifyItems: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ViewCanvas
+            pattern={pattern}
+            numberOfValues={numberOfValues}
+            primaryColor={primaryColor}
+            secondaryColor={secondaryColor}
+          />
+        </div>
         <div className="pattern-container">
-          <div>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                justifyItems: 'center',
-              }}
-            >
-              <ColorPicker
-                window10percent={window10percent}
-                selectedColor={primaryColor}
-                setSelectedColor={setPrimaryColor}
-                colorID={0}
-                colors={[
-                  '#E64D36',
-                  '#F1CDB8',
-                  '#3E7490',
-                  '#D9B85F',
-                  '#9E969B',
-                  '#2F786B',
-                  '#EB9C5A',
-                  '#21141A',
-                  'green',
-                ]}
-              />
-              <ColorPicker
-                window10percent={window10percent}
-                selectedColor={secondaryColor}
-                setSelectedColor={setSecondaryColor}
-                colorID={1}
-                colors={[
-                  '#D9CDE6',
-                  '#49BAE6',
-                  '#D91825',
-                  '#E9E6CC',
-                  '#E17783',
-                  '#0F2E3B',
-                  '#513A2C',
-                  '#E09A29',
-                  'green',
-                ]}
-              />
-            </div>
-            <div style={{ margin: '5%' }}>
-              <CreatePattern
-                pattern={pattern}
-                setPattern={setPattern}
-                primaryColor={primaryColor}
-                secondaryColor={secondaryColor}
-                window10percent={window10percent}
-              />
-            </div>
-          </div>
-          <div
-            style={{
-              height: '90vh',
-              display: 'grid',
-              justifyItems: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <ViewCanvas
-              pattern={pattern}
-              numberOfValues={numberOfValues}
-              primaryColor={primaryColor}
-              secondaryColor={secondaryColor}
-            />
-          </div>
+          <CreatePattern
+            pattern={pattern}
+            setPattern={setPattern}
+            primaryColor={primaryColor}
+            secondaryColor={secondaryColor}
+            percentOfMinSize={percentOfMinSize}
+          />
         </div>
       </div>
     </div>

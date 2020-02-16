@@ -1,10 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './styles/create-pattern-values.css'
+
+function initPatternArray() {
+  const numberOfValues = 6
+  const createPatternGridSize = 6 * 6
+  let newPattern = []
+
+  // Inital pattern
+  for (let i = 0; i < numberOfValues; i++) {
+    const patternElements = []
+    for (let j = 0; j < createPatternGridSize; j++) {
+      const offset = newPattern.length + 1
+      patternElements.push(j % offset === 0 ? true : false)
+    }
+    newPattern.push(patternElements)
+  }
+
+  return newPattern
+}
 
 function CreatePatternElement(props) {
   // Grid too draw one element of the pattern
 
-  useEffect(() => {}, [props.window10percent])
+  useEffect(() => {}, [props.perentOfMinSize])
 
   const updatePattern = (valueGrid, pixel) => {
     let newValuePatterns = [...props.pattern]
@@ -15,13 +33,7 @@ function CreatePatternElement(props) {
   }
 
   return (
-    <div
-      style={{
-        width: props.window10percent || '10vw',
-        height: props.window10percent || '10vw',
-      }}
-      className="create-pattern"
-    >
+    <div className="create-pattern">
       {props.patternElement.map((pixel, pixelIndex) => (
         <div
           key={(pixel, pixelIndex)}
@@ -39,42 +51,44 @@ function CreatePatternElement(props) {
 }
 
 function CreatePattern(props) {
-  const numberOfValues = 6
-
+  const [isValue, setIsValue] = useState(0)
   useEffect(() => {
     // Set up array that stores the pattern drawn by user.
-
-    const createPatternGridSize = 6 * 6
-    let newPattern = []
-
-    // Inital pattern
-    for (let i = 0; i < numberOfValues; i++) {
-      const patternElements = []
-      for (let j = 0; j < createPatternGridSize; j++) {
-        const offset = newPattern.length + 1
-        patternElements.push(j % offset === 0 ? true : false)
-      }
-      newPattern.push(patternElements)
-    }
-
-    props.setPattern(newPattern)
+    props.setPattern(initPatternArray())
   }, [])
 
+  function handleSelectPatternClick(i) {
+    setIsValue(i)
+  }
+
   return (
-    <div className="create-pattern-container">
-      {props.pattern &&
-        props.pattern.map((e, index) => (
-          <CreatePatternElement
-            key={e + index}
-            patternElement={e}
-            index={index}
-            pattern={props.pattern}
-            setPattern={props.setPattern}
-            primaryColor={props.primaryColor}
-            secondaryColor={props.secondaryColor}
-            window10percent={props.window10percent}
-          />
-        ))}
+    <div className="create-pattern-mobile-container">
+      {props.pattern && (
+        <CreatePatternElement
+          patternElement={props.pattern[isValue]}
+          index={isValue}
+          pattern={props.pattern}
+          setPattern={props.setPattern}
+          primaryColor={props.primaryColor}
+          secondaryColor={props.secondaryColor}
+          window10percent={props.perentOfMinSize}
+        />
+      )}
+      <div className="select-pattern-element">
+        {props.pattern &&
+          props.pattern.map((e, i) => (
+            <div
+              key={i}
+              style={{
+                background:
+                  isValue === i ? props.secondaryColor : 'none',
+                borderColor: props.secondaryColor,
+              }}
+              className="select-pattern-element-icon"
+              onClick={() => handleSelectPatternClick(i)}
+            />
+          ))}
+      </div>
     </div>
   )
 }

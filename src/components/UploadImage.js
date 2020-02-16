@@ -37,7 +37,6 @@ function UploadImage(props) {
       onDrop={handleFileUpload}
     >
       <span className="uploadimage-info">
-        <p className="uploadimage-text">Drag and drop image or</p>
         <form>
           <label tabIndex="1" htmlFor="upload-button">
             <div
@@ -52,7 +51,7 @@ function UploadImage(props) {
           </label>
           <input
             id="upload-button"
-            style={{ visibility: 'hidden' }}
+            style={{ width: '1px', visibility: 'hidden' }}
             type="file"
             onChange={e => handleFileUpload(e)}
           ></input>
